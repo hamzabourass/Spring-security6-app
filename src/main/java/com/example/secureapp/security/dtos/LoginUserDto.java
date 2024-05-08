@@ -1,2 +1,10 @@
-package com.example.secureapp.security.dtos;public class LoginUserDto {
+package com.example.secureapp.security.dtos;
+
+import lombok.Data;
+
+@Data
+public class LoginUserDto {
+    private String email;
+
+    private String password;
 }
