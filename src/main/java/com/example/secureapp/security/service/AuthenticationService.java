@@ -2,6 +2,7 @@ package com.example.secureapp.security.service;
 
 import com.example.secureapp.security.dtos.LoginUserDto;
 import com.example.secureapp.security.dtos.RegisterUserDto;
+import com.example.secureapp.security.dtos.TokenDTO;
 import com.example.secureapp.security.entities.AppRole;
 import com.example.secureapp.security.entities.AppUser;
 import com.example.secureapp.security.repository.AppUserRepository;
@@ -22,7 +23,8 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final AccountService accountService;
+    private final JwtService jwtService;
+
 
     public AppUser signup(RegisterUserDto input) {
         AppUser user = new AppUser();
@@ -43,5 +45,12 @@ public class AuthenticationService {
 
         return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
+    }
+    public TokenDTO refresh(String refreshToken) {
+        refreshToken = refreshToken.substring(7);
+        TokenDTO tokenDTO = new TokenDTO();
+        tokenDTO.setRefreshToken(refreshToken);
+        tokenDTO.setAccessToken(jwtService.refreshToken(refreshToken));
+        return tokenDTO;
     }
 }

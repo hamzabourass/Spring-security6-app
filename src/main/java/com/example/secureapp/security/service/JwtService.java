@@ -67,10 +67,11 @@ public class JwtService {
                 .compact();
     }
 
-    public String refreshToken(UserDetails userDetails){
+    public String refreshToken(String token){
+        String username  = extractUsername(token);
         return Jwts
                 .builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + refreshExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
