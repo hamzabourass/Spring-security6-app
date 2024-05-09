@@ -34,13 +34,13 @@ public class SecurityConfig {
         http.sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(auth-> auth.requestMatchers("/h2-console/**","/auth/**").permitAll());
         http.authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET,"/users").permitAll());
+                        .requestMatchers(HttpMethod.GET,"/api/users").hasAuthority("USER"));
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers(HttpMethod.POST,"/users").hasAuthority("ADMIN"));
+                .requestMatchers(HttpMethod.POST,"/api/users").hasAuthority("ADMIN"));
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers(HttpMethod.POST,"/roles").hasAuthority("ADMIN"));
+                .requestMatchers(HttpMethod.POST,"/api/roles").hasAuthority("ADMIN"));
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers(HttpMethod.POST,"/addRoleToUser").hasAuthority("ADMIN"));
+                .requestMatchers(HttpMethod.POST,"/api/addRoleToUser").hasAuthority("ADMIN"));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

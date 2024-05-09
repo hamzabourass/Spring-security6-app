@@ -8,6 +8,7 @@ import com.example.secureapp.security.entities.AppUser;
 import com.example.secureapp.security.service.AccountService;
 import com.example.secureapp.security.service.AuthenticationService;
 import com.example.secureapp.security.service.JwtService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<AppUser> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<AppUser> register( @Valid @RequestBody RegisterUserDto registerUserDto) {
         AppUser registeredUser = authenticationService.signup(registerUserDto);
         accountService.addRoleToUser(registeredUser.getEmail(),"USER");
 
@@ -33,7 +34,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<LoginResponse> authenticate(@Valid @RequestBody LoginUserDto loginUserDto) {
         AppUser authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

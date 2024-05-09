@@ -4,14 +4,13 @@ import com.example.secureapp.security.dtos.RoleUserForm;
 import com.example.secureapp.security.entities.AppRole;
 import com.example.secureapp.security.entities.AppUser;
 import com.example.secureapp.security.service.AccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
+
 public class AccountRestController {
 
     private final AccountService accountService;
